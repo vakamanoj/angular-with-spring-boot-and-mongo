@@ -1,12 +1,6 @@
 package com.shoppingcart.demo.controller;
 
-/*import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;*/
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +22,9 @@ public class ShoppingResource {
 	@Autowired
 	ShoppingService shoppingService;
 	/**
-	   * Processes the HTTP POST request to save an instance of {@code Config}.
+	   * Processes the HTTP POST request to save an instance of {@code Checkout Details}.
 	   *
-	   * @param config the representation of a config collection in MongoDB
+	   * @param checkout the representation of a checkout DB collection in MongoDB
 	   */
 	@RequestMapping(value = "/addPurchase", method= RequestMethod.POST,produces="application/json", consumes="application/json")  
 	  public ResponseEntity<Checkout> save(@RequestBody Checkout checkout) {
