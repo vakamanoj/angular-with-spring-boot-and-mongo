@@ -79,7 +79,7 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
 
 
   $scope.postPay = function(user,card) {
-
+	$scope.loading=true;
     $scope.cartPost = {"totalPrice":$scope.cartTotal,
                       "purchaseId" : $scope.pid,
                       "userDetails":$scope.user,
@@ -87,7 +87,8 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
                       "productList":$scope.cart};
     //checkout controller
     $http.post('checkout/addPurchase', $scope.cartPost).then(function (resp){
-      if(resp.data.PurchaseId)
+      $scope.loading=false;
+	  if(resp.data.PurchaseId)
       {
         $scope.PurchaseId = resp.data.PurchaseId;
         orderService.set($scope.PurchaseId);
@@ -96,6 +97,7 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
       else{
         window.location.href = "#!/failure";
       }
+	  
     },function(){
       console.log("Failed to fetch products");
     });
@@ -104,7 +106,8 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
     //to check server on / off
     $timeout(function () {
       if($scope.PurchaseId == null){
-        alert("Failed to communicate with server");
+       // alert("Failed to communicate with server");
+	           window.location.href = "#!/failure";
       }
     }, 8000);
 
@@ -121,7 +124,7 @@ app.controller("successCtrl",function($scope,orderService, cartService, $rootSco
     $rootScope.$broadcast("cart.updated");
 })
 
-app.controller("failureCtrl",function($scope, cartService) {
+app.controller("failureCtrl",function($scope, cartService,$rootScope) {
 
   cartService.removeAll();
   $rootScope.$broadcast("cart.updated");

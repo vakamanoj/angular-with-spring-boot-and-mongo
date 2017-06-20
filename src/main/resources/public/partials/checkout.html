@@ -1,6 +1,6 @@
 <div class="container wrapperCart">
   <!-- Shipping Info-->
-  <div class="row">
+  <div class="row" ng-hide="loading">
       <div class="col-xs-12 col-md-6">
           <div class="panel panel-default">
               <div class="panel-heading">
@@ -121,6 +121,9 @@
                 <a href="javascript:void(0)" class="btn btn-success btn-lg btn-block" role="button" ng-disabled="cartTotal == 0" ng-click="postPay()">Pay</a>
             </div>
   </div>
+  <div class="row" ng-show="loading">
+	<img style="margin-left:20%" src="images/img-loading.gif"/>
+	</div>
 
 
 </div>
