@@ -4,7 +4,7 @@
 				<div class="col-sm-3" ng-repeat="product in products track by $index">
 					<article class="col-item">
 						<div class="photo">
-							<a href="#"> <img src="{{product.thumbnail}}" class="img-responsive" alt="{{product.name}}" /> </a>
+							<a href="#"> <img ng-cloak src="{{product.thumbnail}}" class="img-responsive" alt="{{product.name}}" /> </a>
 						</div>
 						<div class="info">
 							<div class="row">
@@ -18,7 +18,7 @@
 							</div>
 							<div class="separator clear-left">
 								<p class="btn-details">
-									<span class="pull-left">Quantity :</span> <input type="number" min="1" ng-init="this.quantity = 1" ng-model="this.quantity">
+									<span class="pull-left">Quantity :</span> <input type="number" min="1" pattern="^[1-9]\d*$"  ng-init="this.quantity = 1" ng-model="this.quantity">
 								</p>
 								<p class="btn-add">
 									<i class="fa fa-shopping-cart"></i><a href="javascript:void(0)" ng-click="addToCart($index,this.quantity)">Add to cart</a>

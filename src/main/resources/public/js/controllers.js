@@ -2,7 +2,9 @@ app.controller("menuCtrl",function($scope, cartService, $rootScope) {
   $scope.cartlength  = 0;
   $scope.cartHide = false;
   $rootScope.$on("cart.updated",function() {
+    console.log("in listening cart.updated");
     $scope.cart = cartService.getCart();
+    console.log("cart length",$scope.cart);
     $scope.cartlength = $scope.cart.length;
   })
 
@@ -26,15 +28,18 @@ app.controller("productsCtrl",function($scope, $http, cartService, $rootScope){
 
   $scope.addToCart = function(index,quantity) {
     console.log("add to cart called",index,quantity);
+    $scope.cart = cartService.getCart();
     if($scope.products[index])
     {
       var cartProduct = angular.copy($scope.products[index]);
-      cartProduct.quantity = quantity;
-      //cartProduct.price = quantity*cartProduct.price;
-      $scope.cart.push(cartProduct);
-      cartService.setCart($scope.cart);
-      $rootScope.$broadcast("cart.updated");
+      if(quantity > 0)
+      {
+        cartProduct.quantity = quantity;
 
+        $scope.cart.push(cartProduct);
+        cartService.setCart($scope.cart);
+        $rootScope.$broadcast("cart.updated");
+      }
       console.log("updated cart",$scope.cart);
     }
   }
@@ -101,7 +106,7 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
       if($scope.PurchaseId == null){
         alert("Failed to communicate with server");
       }
-    }, 10000);
+    }, 8000);
 
   }
 
@@ -110,6 +115,14 @@ app.controller("checkoutCtrl",function($scope,cartFinal,$rootScope, cartService,
 
 });
 
-app.controller("successCtrl",function($scope,orderService) {
+app.controller("successCtrl",function($scope,orderService, cartService, $rootScope) {
   $scope.orderId = orderService.get();
+  cartService.removeAll();
+    $rootScope.$broadcast("cart.updated");
+})
+
+app.controller("failureCtrl",function($scope, cartService) {
+
+  cartService.removeAll();
+  $rootScope.$broadcast("cart.updated");
 })

@@ -5,15 +5,25 @@ app.service("cartService",function(){
       cart = obj;
     },
     "getCart" : function(){
+      if(cart.length > 0)
+      {
         return cart = cart.filter(function( element ) {
             return element !== undefined;
         })
+      }
+      else{
+        return [];
+      }
+
     },
     "updateCart":function(i,product) {
       cart[i] = product;
     },
     "removeCart" : function(i) {
       delete cart[i];
+    },
+    "removeAll" : function() {
+      cart = [];
     }
   }
 })

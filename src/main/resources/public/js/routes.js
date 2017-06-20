@@ -15,10 +15,13 @@ app.config(function($routeProvider) {
     })
     .when("/success", {
         templateUrl : "partials/success.html",
-        controller:"successCtrl"
+        controller:"successCtrl",
+        disableCache: true
     })
     .when("/failure", {
-        templateUrl : "partials/failure.html"
+        templateUrl : "partials/failure.html",
+        controller : "failureCtrl",
+        disableCache: true
     })
     .otherwise({
         templateUrl : "partials/404.html"
